@@ -1,0 +1,26 @@
+#Docker compose version
+version: '3'
+
+volumes:
+  packages:
+
+services:
+  #Anaconda image
+  anaconda:
+    #Our image on hub.docker.com (Not pushed yet)
+    image: rapidmsb/anaconda
+    container_name: anaconda
+    #Out ports that it should open
+    ports:
+      - 8888:8888
+    #Where to find the Dockerfile
+    build:
+      context: ./docker
+    restart: always
+    #Mapping the volumes
+    volumes:
+      #Current dir + /docker/config will be mapped on /root/.jupyter/
+      - ./docker/config:/root/.jupyter/
+      #Current dir + /scripts will be mapped on /opt/notebooks
+      - ./scripts:/opt/notebooks
+#      - packages:/opt/conda/lib
